@@ -1,0 +1,31 @@
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media screen and (max-width: 800px) {
+  .products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.product__card {
+  width: 250px;
+  height: auto;
+  margin: 20px auto;
+}
+
+@media screen and (max-width: 600px) {
+  .product__card {
+    width: 230px;
+    height: auto;
+    margin: 20px auto;
+  }
+}
+
+.product__card img {
+  width: 200px;
+  height: 200px;
+  padding-top: 20px;
+}
