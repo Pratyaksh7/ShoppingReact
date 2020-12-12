@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Payment.css';
 import { useStateValue } from './StateProvider';
 
 import CheckoutProduct from './CheckoutProduct';
 import { Link } from 'react-router-dom';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import CurrencyFormat from 'react-currency-format';
+import {getBasketTotal } from './reducer';
 
 function Payment() {
     const [{basket, user}, dispatch] = useStateValue();
@@ -12,8 +14,16 @@ function Payment() {
     const stripe = useStripe();
     const elements = useElements();
 
+    const [error, setError] = useState(null);
+    const [disabled, setDisabled] = useState(true);
+
     const handleSubmit = (e) => {
         // all the fancy stripe stuff...
+    }
+
+    const handleChange = (e) => {
+        setDisabled(e.empty);
+        setError(e.error ? e.error.message : "");
     }
 
     return (
@@ -62,7 +72,20 @@ function Payment() {
                     <div className="payment__details">
                         {/* Stripe Magic will go here  */}
                         <form onSubmit={handleSubmit}>
-                            <CardElement />
+                            <CardElement onChange={handleChange} />
+
+                            <div className="payment__priceContainer">
+                                <CurrencyFormat
+                                    renderText={(value) => (
+                                        <h3>Order Total: {value}</h3>
+                                    )}
+                                    decimalScale={2}
+                                    value={getBasketTotal(basket)} // Part of the homework
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"$"}
+                                />
+                            </div>
                         </form>
                     </div>
                 </div>
