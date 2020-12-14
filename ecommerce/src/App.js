@@ -10,13 +10,14 @@ import { useStateValue } from './StateProvider';
 import Payment from './Payment';
 import {Elements} from "@stripe/react-stripe-js";
 import {loadStripe} from "@stripe/stripe-js";
+import Orders from './Orders';
 
 
 const promise = loadStripe('pk_test_51Hxa3wEaBirDF3MY5XdgP0vkGx1sJLRhCgh125rA3QyfW769qtjsuSEI7mU01GxB7W1StnddIctcBW3JzwsKQ0L300rjIcofrJ');
 
 function App() {
 
-  const [{}, dispatch] = useStateValue();
+    const [{}, dispatch] = useStateValue();  
   useEffect(()=>{
 
     auth.onAuthStateChanged((authUser) => {
@@ -46,6 +47,10 @@ function App() {
         
 
           <Switch>
+            <Route path="/orders"> 
+              <Header />
+                <Orders />
+             </Route>
              <Route path="/login"> 
                 <Login />
              </Route>
